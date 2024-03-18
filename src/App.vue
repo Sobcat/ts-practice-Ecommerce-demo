@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
-import { ref, watch } from 'vue'
+import { ref, watch, watchEffect } from 'vue'
 
 const val = ref({ text: 222 })
-watch(val.value, () => {
-  console.log(val.value)
-})
+watch(
+  () => val.value,
+  () => {
+    console.log(val.value)
+  }
+)
 </script>
 
 <template>
-  {{ val }}
-  <input v-model="val" />
+  {{ val.text }}
+  <input v-model="val.text" />
+  <el-button>Default</el-button>
   <RouterView />
 </template>
 
