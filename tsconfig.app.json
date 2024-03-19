@@ -5,9 +5,14 @@
   "compilerOptions": {
     "composite": true,
     "noEmit": true,
+    "removeComments": true, //编译结果移除注释
+    "noEmitOnError": true, //错误时不生成编译结果
+    "strictNullChecks": true, //类型检查 严格模式
+    "strictPropertyInitialization": true, //更严格的属性检查模式
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@api/*": ["./src/request/api/*"] //搭配别名，也需要在配置文件里面进行路径映射，不然无法识别TS文件
     }
   }
 }

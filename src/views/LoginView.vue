@@ -30,29 +30,63 @@ c
 import { ref, reactive } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import type { LoginForm } from '@/type/login'
+import { login } from '@api/login'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive<LoginForm>({
   username: '',
   userpass: ''
 })
+// login(ruleForm)
 
+// type Test = { [find: string]: string }
+// type Test1 = { [k: string]: string }
+
+// const test: Test1 = {
+//   b: '2',
+//   d: '2',
+//   c: '2',
+// }
+
+//表单验证规则
 // const rules = reactive<FormRules<typeof ruleForm>>({
 const rules = reactive<FormRules<LoginForm>>({
   username: [
-    { required: true, message: 'Please input Activity name', trigger: 'blur' },
-    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' }
+    { required: true, message: '请输入名称', trigger: 'blur' },
+    { min: 0, max: 7, message: '字符长度不得超过7', trigger: 'blur' }
   ],
   userpass: [
-    { required: true, message: 'Please input Activity name', trigger: 'blur' },
-    { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' }
+    { required: true, message: '请输入密码', trigger: 'blur' },
+    { min: 5, max: 18, message: '密码长度为5~18之间', trigger: 'blur' }
   ]
 })
-
+//登录
 const submitForm = (formEl: FormInstance | undefined) => {
-  console.log(111, formEl)
+  if (!formEl) return
+  formEl.validate((valid) => {
+    if (valid) {
+      console.log('submit!')
+      //登录接口
+      login<{ isAuth: boolean }>(ruleForm).then((res) => {
+        const { isAuth } = res
+        if (isAuth) {
+          console.log('登录成功！跳转至首页')
+          router.push({ path: '/home' })
+        }
+      })
+    } else {
+      console.log('error submit!')
+      return false
+    }
+  })
 }
-const resetForm = (formEl: FormInstance | undefined) => {}
+//重置
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+}
 </script>
 
 <style scoped lang="scss">
