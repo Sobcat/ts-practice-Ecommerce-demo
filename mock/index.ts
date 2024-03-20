@@ -1,5 +1,6 @@
 import { MockMethod } from 'vite-plugin-mock'
 import mock from 'mockjs'
+import type { ListData } from '../src/type/goods'
 
 const baseURL = '/mock'
 export default [
@@ -13,8 +14,18 @@ export default [
   {
     method: 'post',
     url: baseURL + '/getGoods',
-    response: () => {
-      return [{ name: '商品1' }, { name: '商品2' }, { name: '商品3' }, { name: '商品4' }]
+    response: (config) => {
+      const { page, pagesize } = config.body
+      const arr: ListData[] = []
+      for (let i = 10 * (page - 1); i < 10 * (page - 1) + pagesize; i++) {
+        arr.push({
+          userId: i,
+          id: i,
+          title: '商品' + i,
+          introduce: '真好用'
+        })
+      }
+      return arr
     }
   }
 ] as MockMethod[]

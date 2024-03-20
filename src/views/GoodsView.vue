@@ -13,6 +13,16 @@
         </el-form-item>
       </el-form>
     </div>
+    <div class="list">
+      <el-table :data="list" border style="width: 100%">
+        <el-table-column prop="userId" label="userId" width="180" />
+        <el-table-column prop="id" label="id" width="180" />
+        <el-table-column prop="title" label="title" />
+        <el-table-column prop="introduce" label="introduce" />
+      </el-table>
+      <el-pagination background layout="prev, pager, next" :total="form.count" v-model:page-size="form.pagesize"
+        v-model:current-page="form.page" @change="change" />
+    </div>
   </div>
 </template>
 
@@ -23,12 +33,19 @@ import { SearchDataInit, type ListData } from "@/type/goods";
 
 const list = ref<ListData[]>([])
 const form = reactive(new SearchDataInit())
-getGoods<ListData[]>().then(res => {
-  list.value = res
-  console.log(list.value);
+function getGoodsData() {
+  getGoods<ListData[]>(form).then(res => {
+    list.value = res
+    form.count = 20
+  })
+}
+getGoodsData()
+const onSubmit = () => {
 
-})
-const onSubmit = () => { }
+}
+const change = () => {
+  getGoodsData()
+}
 </script>
 
 <style scoped></style>
