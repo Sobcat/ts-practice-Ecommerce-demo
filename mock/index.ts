@@ -9,5 +9,12 @@ export default [
     response: () => {
       return { isAuth: true, mes: 'success' }
     }
+  },
+  {
+    method: 'post',
+    url: baseURL + '/getGoods',
+    response: () => {
+      return [{ name: '商品1' }, { name: '商品2' }, { name: '商品3' }, { name: '商品4' }]
+    }
   }
 ] as MockMethod[]

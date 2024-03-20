@@ -1,14 +1,7 @@
 <template>
   <div class="login-container">
-    <el-form
-      ref="ruleFormRef"
-      style="max-width: 600px"
-      :model="ruleForm"
-      status-icon
-      :rules="rules"
-      label-width="auto"
-      class="demo-ruleForm"
-    >
+    <el-form ref="ruleFormRef" style="max-width: 600px" :model="ruleForm" status-icon :rules="rules" label-width="auto"
+      class="demo-ruleForm">
       <h2>系统登录</h2>
       <el-form-item label="账号" prop="username">
         <el-input v-model="ruleForm.username" />
@@ -73,7 +66,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
         const { isAuth } = res
         if (isAuth) {
           console.log('登录成功！跳转至首页')
-          router.push({ path: '/home' })
+          router.push({ path: '/' })
         }
       })
     } else {
@@ -94,16 +87,19 @@ const resetForm = (formEl: FormInstance | undefined) => {
   display: flex;
   width: 100%;
   height: 100%;
+
   .demo-ruleForm {
     margin: auto;
     padding: 20px 40px;
     width: 400px;
     border-radius: 4px;
     border: 1px solid var(--el-border-color-light);
+
     h2 {
       margin-bottom: 20px;
       text-align: center;
     }
+
     .button-box {
       width: 100%;
       text-align: right;
